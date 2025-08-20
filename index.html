@@ -6,98 +6,106 @@
     <title>ইনসাফ ফাউন্ডেশন</title>
     <style>
         :root {
-            --primary-color: #185E18;
-            --secondary-color: #FF8700;
-            --white-color: #FFFFFF;
-            --light-gray: #f4f4f4;
-            --gray-text: #555;
+            --primary-color: #185E18; --secondary-color: #FF8700; --white-color: #FFFFFF;
+            --light-gray: #f4f4f4; --gray-text: #555;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; margin: 0; background-color: var(--light-gray); color: var(--gray-text); }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; background-color: var(--light-gray); }
         .container { padding: 15px; max-width: 1200px; margin: 0 auto; }
-        
-        /* --- UPDATED: Splash Screen with White Background --- */
-        #splash-screen {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: var(--white-color); /* Changed to white */
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-        #splash-screen img {
-            width: 150px; /* Adjusted size */
-            animation: pulse 1.5s infinite;
-        }
+        #splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--white-color); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease-out; }
+        #splash-screen img { width: 150px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        
         .header-banner { width: 100%; height: auto; max-height: 400px; object-fit: cover; display: block; }
-        header { background-color: var(--primary-color); color: var(--white-color); padding: 15px; text-align: center; }
+        header { background-color: var(--primary-color); color: var(--white-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
         header h1 { margin: 0; font-size: 1.5em; }
         #main-content { display: none; }
+        
+        /* NEW: Hamburger Menu */
+        .menu-btn { font-size: 30px; cursor: pointer; background: none; border: none; color: white; }
+        .side-nav { height: 100%; width: 0; position: fixed; z-index: 1001; top: 0; left: 0; background-color: #111; overflow-x: hidden; transition: 0.5s; padding-top: 60px; }
+        .side-nav a { padding: 8px 8px 8px 32px; text-decoration: none; font-size: 20px; color: #818181; display: block; transition: 0.3s; }
+        .side-nav a:hover { color: #f1f1f1; }
+        .side-nav .close-btn { position: absolute; top: 0; right: 25px; font-size: 36px; margin-left: 50px; }
+        
         #member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
         .member-card { background: var(--white-color); border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.08); padding: 15px; text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
         .member-card:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.12); }
         .member-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color); }
         .member-card h3 { margin: 10px 0 5px; color: var(--primary-color); }
-        .member-card p { margin: 5px 0; font-size: 0.9em; }
+        
+        /* NEW: Apply Button */
+        .apply-button { display: block; width: 90%; max-width: 300px; margin: 40px auto; padding: 15px; background-color: var(--secondary-color); color: var(--white-color); text-align: center; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 8px; transition: background-color 0.3s; }
+        .apply-button:hover { background-color: #e67a00; }
 
-        /* Modern Modal Design */
+        /* NEW: Info Cards */
+        #info-cards-container { padding: 20px 0; }
+        .info-card { background: var(--white-color); border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.08); margin-bottom: 20px; padding: 20px; }
+        .info-card h2 { color: var(--primary-color); margin-top: 0; border-bottom: 2px solid var(--light-gray); padding-bottom: 10px; }
+        .info-card img { max-width: 100%; border-radius: 8px; margin-bottom: 15px; }
+        .info-card p { white-space: pre-wrap; line-height: 1.6; }
+
+        /* NEW: Footer */
+        footer { background-color: #333; color: white; padding: 20px; text-align: center; }
+        #footer-nav { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; }
+        #footer-nav a { color: white; text-decoration: none; }
+        
+        /* Modal Design (unchanged) */
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
-        .modal-content { background-color: var(--light-gray); position: relative; margin: 15% auto; padding: 0; padding-bottom: 20px; border: none; width: 90%; max-width: 450px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-content { background-color: var(--light-gray); position: relative; margin: 10% auto; padding: 0; padding-bottom: 20px; width: 90%; max-width: 450px; border-radius: 15px; animation: zoomIn 0.3s; }
         @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-header { padding: 20px; background: var(--primary-color); border-radius: 15px 15px 0 0; height: 80px; position: relative; }
-        .close-btn { color: rgba(255,255,255,0.8); position: absolute; top: 10px; right: 20px; font-size: 30px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
-        .close-btn:hover { color: var(--white-color); }
+        .modal-header { padding: 20px; background: var(--primary-color); border-radius: 15px 15px 0 0; height: 80px; }
+        .close-btn { color: rgba(255,255,255,0.8); position: absolute; top: 10px; right: 20px; font-size: 30px; cursor: pointer; }
         #detail-content { text-align: center; padding: 0 20px; }
-        
-        #detail-profile-pic {
-            width: 130px; height: 130px; border-radius: 50%;
-            object-fit: cover; border: 5px solid var(--white-color);
-            margin-top: -75px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            position: relative; 
-            z-index: 2;         
-        }
-
+        #detail-profile-pic { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 5px solid var(--white-color); margin-top: -75px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); position: relative; z-index: 2; }
         #detail-name { font-size: 1.8em; color: var(--primary-color); margin: 15px 0 5px 0; }
-        #detail-title { font-size: 1em; color: var(--gray-text); margin-top: 0; }
         #detail-last-deposit { font-size: 1.1em; font-weight: bold; color: var(--secondary-color); background-color: #fff; padding: 10px 15px; border-radius: 8px; display: inline-block; margin-top: 10px; }
-        
-        /* Modern Deposit List Design */
-        #deposits-list-container h3 { margin-top: 30px; margin-bottom: 15px; color: var(--primary-color); text-align: left; font-size: 1.2em; }
-        #deposits-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-        .deposit-item { display: flex; justify-content: space-between; align-items: center; background: var(--white-color); padding: 12px 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s; }
-        .deposit-item:hover { transform: scale(1.02); }
-        .month-name { font-weight: 600; color: var(--gray-text); }
-        .deposit-amount { font-weight: 700; color: var(--primary-color); background-color: #e8f5e9; padding: 5px 10px; border-radius: 20px; font-size: 0.9em; }
+        #deposits-list { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 25px; }
+        .deposit-item { display: flex; justify-content: space-between; align-items: center; background: var(--white-color); padding: 12px 15px; border-radius: 8px; }
+        .month-name { font-weight: 600; }
+        .deposit-amount { font-weight: 700; color: var(--primary-color); background-color: #e8f5e9; padding: 5px 10px; border-radius: 20px; }
     </style>
 </head>
 <body>
-    
-    <!-- UPDATED: Splash Screen HTML simplified -->
     <div id="splash-screen">
         <img src="https://i.postimg.cc/mDYhHnCF/20250815-023730.png" alt="Loading Logo">
+    </div>
+
+    <!-- NEW: Side Navigation Menu -->
+    <div id="side-nav" class="side-nav">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <!-- Nav links will be injected here by JS -->
     </div>
 
     <div id="main-content">
         <img id="header-banner" src="https://via.placeholder.com/1200x400.png?text=Banner" alt="ব্যানার" class="header-banner">
         <header>
+            <button class="menu-btn" onclick="openNav()">&#9776;</button>
             <h1>ফাউন্ডেশনের হিসাব</h1>
+            <div style="width: 40px;"></div> <!-- Spacer for centering title -->
         </header>
+
         <div class="container">
-            <h2 style="text-align: center; color: var(--primary-color);">আমাদের সকল মেম্বারগণ</h2>
+            <h2 style="text-align: center; color: var(--primary-color); margin-top: 30px;">আমাদের সকল মেম্বারগণ</h2>
             <div id="member-grid"></div>
+            
+            <!-- NEW: Apply Button -->
+            <a href="https://forms.gle/VFmGwvEZNaUDA1DP7" target="_blank" class="apply-button">মেম্বার হওয়ার জন্য আবেদন করুন</a>
+
+            <!-- NEW: Info Cards Section -->
+            <div id="info-cards-container"></div>
         </div>
+        
+        <!-- NEW: Footer -->
+        <footer>
+            <ul id="footer-nav"></ul>
+            <p style="margin-top: 20px; font-size: 0.9em;">&copy; ২০২৩ ইনসাফ ফাউন্ডেশন। সর্বস্বত্ব সংরক্ষিত।</p>
+        </footer>
     </div>
 
     <div id="detail-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-btn">&times;</span>
-            </div>
-            <div id="detail-content">
-                <!-- Details will be injected here -->
-            </div>
+            <div class="modal-header"><span class="close-btn">&times;</span></div>
+            <div id="detail-content"></div>
         </div>
     </div>
 
@@ -108,64 +116,80 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // All JS code remains the same as before, no changes needed here.
+        // DOM Elements
         const splashScreen = document.getElementById('splash-screen');
         const mainContent = document.getElementById('main-content');
         const memberGrid = document.getElementById('member-grid');
         const modal = document.getElementById('detail-modal');
-        const closeModalBtn = document.querySelector('.close-btn');
         const detailContent = document.getElementById('detail-content');
-        let allMembers = [];
-
-        window.onload = () => {
-            setTimeout(() => {
-                splashScreen.style.opacity = '0';
-                setTimeout(() => {
-                    splashScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
-                }, 500);
-            }, 2500); 
-            fetchData();
-        };
+        
+        window.onload = () => { setTimeout(() => { splashScreen.style.opacity = '0'; setTimeout(() => { splashScreen.style.display = 'none'; mainContent.style.display = 'block'; }, 500); }, 2500); fetchData(); };
 
         const fetchData = async () => {
-            try {
-                const doc = await db.collection('settings').doc('config').get();
-                if(doc.exists && doc.data().bannerUrl) { document.getElementById('header-banner').src = doc.data().bannerUrl; }
-            } catch (error) { console.error("Error fetching settings:", error); }
-
-            db.collection('members').onSnapshot(snapshot => {
-                allMembers = [];
-                memberGrid.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const member = { id: doc.id, ...doc.data() };
-                    allMembers.push(member);
-                    memberGrid.appendChild(createMemberCard(member));
-                });
-            });
+            // Fetch banner
+            const settingsDoc = await db.collection('settings').doc('config').get();
+            if(settingsDoc.exists) document.getElementById('header-banner').src = settingsDoc.data().bannerUrl;
+            // Fetch members
+            db.collection('members').onSnapshot(snapshot => { memberGrid.innerHTML = ''; snapshot.forEach(doc => memberGrid.appendChild(createMemberCard({ id: doc.id, ...doc.data() }))); });
+            // NEW: Fetch info sections
+            fetchInfoSections();
         };
         
-        const createMemberCard = (member) => { const card = document.createElement('div'); card.className = 'member-card'; card.dataset.id = member.id; card.innerHTML = `<img src="${member.imageUrl}" alt="${member.name}"><h3>${member.name}</h3><p><strong>পদবি:</strong> ${member.title}</p>`; card.addEventListener('click', () => showDetails(member.id)); return card; };
+        const createMemberCard = (member) => { const card = document.createElement('div'); card.className = 'member-card'; card.innerHTML = `<img src="${member.imageUrl}" alt="${member.name}"><h3>${member.name}</h3><p>${member.title}</p><p><strong>মোট জমা:</strong> ${member.lastDeposit || 0} টাকা</p>`; card.addEventListener('click', () => showDetails(member)); return card; };
         
-        const openModal = () => modal.style.display = 'block';
-        const closeModal = () => modal.style.display = 'none';
-        closeModalBtn.addEventListener('click', closeModal);
-        window.addEventListener('click', (e) => { if (e.target == modal) closeModal(); });
+        modal.querySelector('.close-btn').addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', (e) => { if (e.target == modal) modal.style.display = 'none'; });
 
-        const showDetails = (id) => {
-            const member = allMembers.find(m => m.id === id);
-            if (!member) return;
-
+        const showDetails = (member) => {
             const months = { jan: 'জানুয়ারি', feb: 'ফেব্রুয়ারি', mar: 'মার্চ', apr: 'এপ্রিল', may: 'মে', jun: 'জুন', jul: 'জুলাই', aug: 'আগস্ট', sep: 'সেপ্টেম্বর', oct: 'অক্টোবর', nov: 'নভেম্বর', dec: 'ডিসেম্বর' };
             let depositItems = '';
-            for (const [key, name] of Object.entries(months)) {
-                const amount = member.monthlyDeposits?.[key] || 0;
-                depositItems += `<div class="deposit-item"><span class="month-name">${name}</span><span class="deposit-amount">${amount} টাকা</span></div>`;
-            }
-
-            detailContent.innerHTML = `<img id="detail-profile-pic" src="${member.imageUrl}" alt="${member.name}"><h2 id="detail-name">${member.name}</h2><p id="detail-title">${member.title}</p><p id="detail-last-deposit">শেষ জমা: ${member.lastDeposit} টাকা</p><div id="deposits-list-container"><h3>মাসিক জমার বিবরণ</h3><div id="deposits-list">${depositItems}</div></div>`;
-            openModal();
+            for (const [key, name] of Object.entries(months)) { depositItems += `<div class="deposit-item"><span class="month-name">${name}</span><span class="deposit-amount">${member.monthlyDeposits?.[key] || 0} টাকা</span></div>`; }
+            detailContent.innerHTML = `<img id="detail-profile-pic" src="${member.imageUrl}" alt="${member.name}"><h2 id="detail-name">${member.name}</h2><p>${member.title}</p><p id="detail-last-deposit">মোট জমা: ${member.lastDeposit || 0} টাকা</p><div id="deposits-list">${depositItems}</div>`;
+            modal.style.display = 'block';
         };
+
+        // --- NEW: Functions for Menu, Info Cards, and Footer ---
+        const infoSectionsConfig = {
+            introduction: 'পরিচিতি', vision_mission: 'উদ্দেশ্য ও লক্ষ্য', rules_conditions: 'নীতি ও শর্তাবলী',
+            future_plans: 'ভবিষ্যৎ পরিকল্পনা', member_roles: 'সদস্য সুবিধা ও দায়িত্ব', financial_policy: 'আর্থিক নীতিমালা',
+            developer_info: 'ডেভলপার পরিচিতি'
+        };
+        
+        const fetchInfoSections = async () => {
+            const navContainer = document.getElementById('side-nav');
+            const cardContainer = document.getElementById('info-cards-container');
+            const footerContainer = document.getElementById('footer-nav');
+
+            // Clear previous content
+            navContainer.innerHTML = '<a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>';
+            cardContainer.innerHTML = '';
+            footerContainer.innerHTML = '';
+
+            for (const [id, title] of Object.entries(infoSectionsConfig)) {
+                // Nav Link
+                navContainer.insertAdjacentHTML('beforeend', `<a href="#${id}" onclick="closeNav()">${title}</a>`);
+                // Footer Link
+                footerContainer.insertAdjacentHTML('beforeend', `<li><a href="#${id}">${title}</a></li>`);
+                
+                // Fetch and render card
+                const doc = await db.collection('info_sections').doc(id).get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    const cardHtml = `
+                        <div id="${id}" class="info-card">
+                            <h2>${title}</h2>
+                            ${data.imageUrl ? `<img src="${data.imageUrl}" alt="${title}">` : ''}
+                            <p>${data.text}</p>
+                        </div>
+                    `;
+                    cardContainer.insertAdjacentHTML('beforeend', cardHtml);
+                }
+            }
+        };
+
+        // Nav menu functions
+        const openNav = () => document.getElementById("side-nav").style.width = "250px";
+        const closeNav = () => document.getElementById("side-nav").style.width = "0";
     </script>
 </body>
-</html>
+            </html>
